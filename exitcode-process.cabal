@@ -27,7 +27,9 @@ source-repository   head
 library
   exposed-modules:     Control.Process
   build-depends:       base >=4.8 && <4.11
-                     , exitcode
+                     , lens >=4.15 && < 4.17
+                     , exitcode >= 0.1.0.1
+                     , semigroupoids >= 5.1 && <5.3
   hs-source-dirs:      src
   default-language:    Haskell2010
   ghc-options:         -Wall
