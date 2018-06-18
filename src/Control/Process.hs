@@ -1,13 +1,17 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE TemplateHaskell #-}
 
 module Control.Process where
 
 import Control.Applicative(Applicative(pure, (<*>)), Alternative((<|>), empty), liftA3)
 import Control.Category((.), id)
-import Control.Lens(Field1(_1), Field2(_2), Field3(_3), Prism', Lens', Traversal', lens, prism', _Just, view)
+import Control.Lens(Field1(_1), Field2(_2), Field3(_3), Prism', Lens', Traversal', lens, prism', _Just, view, FunctorWithIndex, FoldableWithIndex, TraversableWithIndex(itraversed), traversed, Each(each))
 import Control.Monad(Monad(return, (>>=)))
+import Control.Monad.Zip(MonadZip(mzip))
+import Data.Deriving(deriveEq1, deriveOrd1, deriveShow1)
 import Data.Eq(Eq)
 import Data.Foldable(Foldable(foldr))
 import Data.Functor(Functor(fmap), (<$>))
@@ -15,6 +19,7 @@ import Data.Functor.Alt(Alt((<!>)))
 import Data.Functor.Apply(Apply((<.>)))
 import Data.Functor.Bind(Bind((>>-)))
 import Data.Functor.Extend(Extend(duplicated))
+import Data.Int(Int)
 import Data.Maybe(Maybe(Just, Nothing), maybe)
 import Data.Monoid(Monoid(mappend, mempty))
 import Data.Ord(Ord)
@@ -29,6 +34,10 @@ data Maybe3 a =
     (Maybe a)
     (Maybe a)
   deriving (Eq, Ord, Show, Generic)
+
+$(deriveShow1 ''Maybe3) 
+$(deriveEq1 ''Maybe3) 
+$(deriveOrd1 ''Maybe3) 
 
 instance Functor Maybe3 where
   fmap f (Maybe3 m1 m2 m3) =
@@ -108,6 +117,22 @@ instance Field3 (Maybe3 a) (Maybe3 a) (Maybe a) (Maybe a) where
     lens
       (\(Maybe3 _ _ m3) -> m3)
       (\(Maybe3 m1 m2 _) m3 -> Maybe3 m1 m2 m3)
+
+instance FunctorWithIndex Int Maybe3
+
+instance FoldableWithIndex Int Maybe3
+
+instance TraversableWithIndex Int Maybe3 where
+  itraversed =
+    traversed
+
+instance Each (Maybe3 a) (Maybe3 b) a b where
+  each =
+    traverse
+
+instance MonadZip Maybe3 where
+  mzip (Maybe3 x1 x2 x3) (Maybe3 y1 y2 y3) =
+    Maybe3 (x1 `mzip` y1) (x2 `mzip` y2) (x3 `mzip` y3)
 
 maybe3Prism ::
   Prism'

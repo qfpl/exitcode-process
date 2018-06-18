@@ -1,12 +1,14 @@
-{ mkDerivation, base, checkers, exitcode, hedgehog, lens
-, QuickCheck, semigroupoids, stdenv, tasty, tasty-hedgehog
+{ mkDerivation, base, checkers, deriving-compat, exitcode, hedgehog
+, lens, QuickCheck, semigroupoids, stdenv, tasty, tasty-hedgehog
 , tasty-hunit, tasty-quickcheck, transformers
 }:
 mkDerivation {
   pname = "exitcode-process";
   version = "0.1.0.0";
   src = ./.;
-  libraryHaskellDepends = [ base exitcode lens semigroupoids ];
+  libraryHaskellDepends = [
+    base deriving-compat exitcode lens semigroupoids
+  ];
   testHaskellDepends = [
     base checkers hedgehog lens QuickCheck tasty tasty-hedgehog
     tasty-hunit tasty-quickcheck transformers

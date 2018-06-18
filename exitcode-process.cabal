@@ -26,26 +26,27 @@ source-repository   head
 
 library
   exposed-modules:     Control.Process
-  build-depends:       base >=4.8 && <4.11
+  build-depends:       base >=4.8 && < 4.11
                      , lens >=4.15 && < 4.17
                      , exitcode >= 0.1.0.1
-                     , semigroupoids >= 5.1 && <5.3
+                     , semigroupoids >= 5.1 && < 5.3
+                     , deriving-compat >= 0.3 && < 0.5
   hs-source-dirs:      src
   default-language:    Haskell2010
   ghc-options:         -Wall
 
 test-suite             tests
-  build-depends:       QuickCheck >=2.9.2 && <2.12
-                     , base >=4.8 && <4.11
-                     , checkers >=0.4.6 && <0.5
+  build-depends:       QuickCheck >= 2.9.2 && < 2.12
+                     , base >= 4.8 && < 4.11
+                     , checkers >= 0.4.6 && < 0.5
                      , exitcode-process
-                     , hedgehog >=0.5 && <0.6
-                     , lens >=4.15 && <4.17
-                     , tasty >=0.11 && <1.1
-                     , tasty-hunit >=0.9 && <0.11
-                     , tasty-hedgehog >= 0.1 && <0.3
-                     , tasty-quickcheck >=0.8.4 && <0.11
-                     , transformers >=0.4.1 && <5.5
+                     , hedgehog >= 0.5 && < 0.6
+                     , lens >= 4.15 && < 4.17
+                     , tasty >= 0.11 && < 1.1
+                     , tasty-hunit >= 0.9 && < 0.11
+                     , tasty-hedgehog >= 0.1 && < 0.3
+                     , tasty-quickcheck >= 0.8.4 && < 0.11
+                     , transformers >= 0.4.1 && < 5.5
   type:                exitcode-stdio-1.0
   main-is:             Tests.hs
   hs-source-dirs:      test
