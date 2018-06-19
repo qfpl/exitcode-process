@@ -6,6 +6,10 @@
 
 module Control.Process.Maybe3(
   Maybe3(..)
+, IsMaybe3(..)
+, HasMaybe3(..)
+, AsMaybe3(..)
+, ManyMaybe3(..)
 , maybe3Prism
 , maybe3Product
 , mStdin
@@ -18,7 +22,7 @@ module Control.Process.Maybe3(
 
 import Control.Applicative(Applicative(pure, (<*>)), Alternative((<|>), empty), liftA3)
 import Control.Category((.), id)
-import Control.Lens(Field1(_1), Field2(_2), Field3(_3), Prism', Lens', Traversal', Iso, lens, prism', iso, _Just, view, FunctorWithIndex, FoldableWithIndex, TraversableWithIndex(itraversed), traversed, Each(each))
+import Control.Lens(Field1(_1), Field2(_2), Field3(_3), Prism', Lens', Traversal', Iso, Iso', lens, prism', iso, _Just, view, FunctorWithIndex, FoldableWithIndex, TraversableWithIndex(itraversed), traversed, Each(each))
 import Control.Monad(Monad(return, (>>=)))
 import Control.Monad.Zip(MonadZip(mzip))
 import Data.Deriving(deriveEq1, deriveOrd1, deriveShow1)
@@ -46,6 +50,46 @@ data Maybe3 a =
     (Maybe a)
     (Maybe a)
   deriving (Eq, Ord, Show, Generic)
+
+class IsMaybe3 f where
+  _Maybe3_ ::
+    Iso'
+      (f a)
+      (Maybe3 a)
+
+instance IsMaybe3 Maybe3 where
+  _Maybe3_ =
+    id
+    
+class HasMaybe3 f where
+  maybe3 ::
+    Lens'
+      (f a)
+      (Maybe3 a)
+
+instance HasMaybe3 Maybe3 where
+  maybe3 =
+    id
+
+class AsMaybe3 f where
+  _Maybe3 ::
+    Prism'
+      (f a)
+      (Maybe3 a)
+
+instance AsMaybe3 Maybe3 where
+  _Maybe3 =
+    id
+    
+class ManyMaybe3 f where
+  _ManyMaybe3 ::
+    Traversal'
+      (f a)
+      (Maybe3 a)
+
+instance ManyMaybe3 Maybe3 where
+  _ManyMaybe3 =
+    id
 
 $(deriveShow1 ''Maybe3) 
 $(deriveEq1 ''Maybe3) 
