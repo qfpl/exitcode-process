@@ -10,8 +10,8 @@ let
     exitcode = (pkgs.fetchFromGitHub {
       owner = "qfpl";
       repo = "exitcode";
-      rev = "bc31d0de9bd4886b912e03bdfa4a6c262b35fbf8";
-      sha256 = "08vi4j77vfv6k1dnwfrvvrg9dzijk3c7iynw9k5d6wxb5chk9xhy";
+      rev = "28f57c842c8864542fde0efae8788ce7c2523fea";
+      sha256 = "1v7aski1vvxxskg20xlgvgfvxv2yjyvdl3aszvvw0g6ak2jwgwsf";
     });
 
   };
