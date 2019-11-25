@@ -4,7 +4,7 @@ name:                exitcode-process
 version:             0.1.0.0
 synopsis:            A process library that uses the `exitcode` package.
 description:       
-  <<http://i.imgur.com/uZnp9ke.png>>
+  <<https://raw.githubusercontent.com/qfpl/assets/master/data61-transparent-bg.png>>
   .
   A process library that uses the `exitcode` package.
 license:             BSD3
